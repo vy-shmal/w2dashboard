@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace W2dashboard\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 
