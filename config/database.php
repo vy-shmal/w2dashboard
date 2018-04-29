@@ -54,6 +54,19 @@ return [
             'engine' => null,
         ],
 
+        'superoffers' => [
+            'driver' => 'mysql',
+            'host' => env('SO_HOST', '185.141.192.219'),
+            'port' => env('SO_PORT', '3306'),
+            'database' => env('SO_DATABASE', 'supperoff_laravel'),
+            'username' => env('SO_USERNAME', 'laravel'),
+            'password' => env('SO_PASSWORD', 'Ua5BYhEqpec7PVyC'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

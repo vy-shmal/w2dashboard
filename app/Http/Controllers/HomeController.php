@@ -3,6 +3,7 @@
 namespace W2dashboard\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
+        //var_dump($order);
+
+        return view('home')->with('orders',$orders);
     }
 }
