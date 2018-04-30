@@ -24,9 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
+        //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
         //var_dump($order);
 
-        return view('home')->with('orders',$orders);
+        //return view('home')->with('orders',$orders);
+        return view('home');
     }
 }

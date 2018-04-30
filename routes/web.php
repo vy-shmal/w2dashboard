@@ -1,5 +1,8 @@
 <?php
 
+//use Analytics;
+//use Spatie\Analytics\Period;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +19,9 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/data', function(){
+    //$analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(1));
+    //dd($analyticsData);
+});
