@@ -21,7 +21,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/data', function(){
-    //$analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(1));
-    //dd($analyticsData);
-});
+Route::get('/data', 'SyncController@index');

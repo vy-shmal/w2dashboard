@@ -14,11 +14,28 @@
                         </div>
                     @endif
 
-                    <div class="card" style="width: 10rem;">
+                    <div class="card" style="width: 10rem; display: inline-block;">
                         <div class="card-body">
                             <h5 class="card-title">Σημερινές Παραγγελείες</h5>
-                            {{--<h3 class="card-text"> {{ count($orders )}}</h3>--}}
+                            <h3 class="card-text"> {{ $totalOrders }}</h3>
                         </div>
+                    </div>
+
+                    <div class="card" style="width: 10rem; display: inline-block;">
+                        <div class="card-body">
+                            <h5 class="card-title">Τζίρος χωρίς  Μεταφορικά</h5>
+                            <h3 class="card-text"> {{ $tzirosNoShipping }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <ul>
+                            @foreach ($paymentMethods as $key => $value )
+                                    <li>
+                                        {{$key}} : {{$value['ammount']}} : {{$value['count']}}
+                                    </li>
+                            @endforeach
+                        </ul>
                     </div>
 
                 </div>
