@@ -26,7 +26,7 @@
                             <h5 class="card-title">Τζίρος χωρίς  Μεταφορικά</h5>
                             <h3 class="card-text"> {{ $tzirosNoShipping }}</h3>
                         </div>
-                    </div>
+                    </div>as
 
                     <div class="col-xs-12">
                         <ul>

@@ -3,6 +3,7 @@
 namespace W2dashboard\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use W2dashboard\Order;
 
@@ -29,6 +30,10 @@ class HomeController extends Controller
         //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
         //var_dump($order);
 
+        if (Auth::user()->admin == 0){
+            return view('notadmin');
+        }
+
         $tzirosNoShipping = 0;
         $paymentMethods = array();
 
@@ -50,7 +55,7 @@ class HomeController extends Controller
 
         }
 
-        return view('home')
+        return view('homevue')
             ->with('totalOrders',$totalOrders)
             ->with('tzirosNoShipping',$tzirosNoShipping)
             ->with('paymentMethods',$paymentMethods);

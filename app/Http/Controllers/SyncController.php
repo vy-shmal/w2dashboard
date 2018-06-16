@@ -13,21 +13,31 @@ class SyncController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $date = null)
     {
+
         $entityIds = array();
-        //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
-        $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', '2018-01-29')->get();
+
+
+        if(empty($date)){
+            $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()-1'))->get();
+        }else{
+            $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', $date)->get();
+        }
+
+
+
+        //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', '2018-01-29')->get();
 
         foreach ($orders as $order) {
             Order::updateOrCreate(
@@ -74,6 +84,7 @@ class SyncController extends Controller
 
 
         //return view('home')->with('orders',$orders);
-        return view('sync');
+        //return view('sync');
+        return 'true' ;
     }
 }

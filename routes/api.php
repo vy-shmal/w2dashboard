@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('orders', 'OrderdataController@index');
+
+Route::get('orders/{date}', 'OrderdataController@index');
+
+Route::get('sync', 'SyncController@index');
+
+Route::get('sync/{date}', 'SyncController@index');
