@@ -29,12 +29,12 @@ class SyncController extends Controller
         $entityIds = array();
 
         if(empty($date)){
-            $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()-1'))->get();
+            $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
         }else{
             $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', $date)->get();
         }
 
-
+          //var_dump( $orders )  ;
 
         //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', '2018-01-29')->get();
 
