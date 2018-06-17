@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \W2dashboard\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \W2dashboard\Http\Middleware\TrustProxies::class,
+        \W2dashboard\Http\Middleware\IsAdmin::class,
     ];
 
     /**
