@@ -64341,7 +64341,7 @@ exports = module.exports = __webpack_require__(173)(false);
 
 
 // module
-exports.push([module.i, "\n.w2cart[data-v-78b73b2d] {\n    background-color: #eaeaea;\n    margin-bottom: 30px;\n    padding: 10px;\n}\n.w2cart.small-p p[data-v-78b73b2d] {\n    font-size: 1rem;\n}\n.w2cart p[data-v-78b73b2d] {\n    margin-bottom: 0;\n    border-top: 1px solid #ccc;\n    font-size: 2rem;\n    text-align: right;\n    padding-right: 10px;\n}\n.payment-method span[data-v-78b73b2d] {\n    display: inline-block;\n    width: 80px;\n}\n.payment-method span[data-v-78b73b2d]:first-child {width:155px;\n}\n", ""]);
+exports.push([module.i, "\n.w2cart[data-v-78b73b2d] {\n    background-color: #eaeaea;\n    margin-bottom: 30px;\n    padding: 10px;\n}\n.w2cart.small-p p[data-v-78b73b2d] {\n    font-size: 1rem;\n}\n.w2cart p[data-v-78b73b2d] {\n    margin-bottom: 0;\n    border-top: 1px solid #ccc;\n    font-size: 2rem;\n    text-align: right;\n    padding-right: 10px;\n}\n.payment-method span[data-v-78b73b2d] {\n    display: inline-block;\n    width: 70px;\n}\n.payment-method span[data-v-78b73b2d]:first-child {width:155px;\n}\n.canceled[data-v-78b73b2d] {\n    background-color: #ffc6c6 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -64778,6 +64778,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -64843,8 +64848,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.orders.map(function (obj) {
                 // total += Math.floor(obj.grand_total * 100) / 100;
                 // shippingtotal += Math.floor(obj.shipping_amount * 100) / 100;
-                total += Number(obj.grand_total);
-                shippingtotal += Number(obj.shipping_amount);
+
+                if (obj.status !== 'canceled') {
+                    total += Number(obj.grand_total);
+                    shippingtotal += Number(obj.shipping_amount);
+                }
             });
 
             return Math.floor((total - shippingtotal) * 100) / 100;
@@ -64857,17 +64865,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         calculateShippingData: function calculateShippingData() {
             var _this3 = this;
 
+            //clear the object before
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
 
             try {
-
                 for (var _iterator = Object.keys(this.shippingData)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var prop = _step.value;
 
                     delete this.shippingData[prop];
                 }
+
+                //initialize data
             } catch (err) {
                 _didIteratorError = true;
                 _iteratorError = err;
@@ -64891,16 +64901,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 };
             });
 
-            console.log(this.shippingData);
-
+            //fill the prices and count of payment methods
             this.orders.map(function (order) {
 
                 _this3.shippingData[order.method].count += 1;
                 _this3.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100;
             });
 
-            console.log(this.shippingData);
             //return this.shippingData;
+        },
+        getCanceledOrders: function getCanceledOrders() {
+
+            var canceledOrders = 0;
+
+            //get the canceled totals
+            this.orders.map(function (obj) {
+
+                if (obj.status == 'canceled') {
+                    canceledOrders++;
+                }
+            });
+
+            return canceledOrders;
         }
     },
     computed: {
@@ -65016,13 +65038,23 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col col-sm-3 " }, [
             _c("div", { staticClass: "w2cart" }, [
-              _c("h5", [_vm._v("Grand Total without shipping")]),
+              _c("h5", { staticStyle: { "font-size": "1.2rem" } }, [
+                _vm._v("Grand Total without shipping & canceled")
+              ]),
               _vm._v(" "),
               _c("p", [_vm._v(_vm._s(this.grandTotalNoShipping()) + " €")])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col col-sm-7  " }, [
+          _c("div", { staticClass: "col col-sm-2 " }, [
+            _c("div", { staticClass: "w2cart" }, [
+              _c("h5", [_vm._v("Canceled Orders")]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(this.getCanceledOrders()) + " ")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col col-sm-5  " }, [
             _c(
               "div",
               { staticClass: "w2cart small-p" },
@@ -65059,6 +65091,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "card bg-light mb-3 ",
+                  class: { canceled: order.status == "canceled" },
                   staticStyle: { "max-width": "18rem" }
                 },
                 [

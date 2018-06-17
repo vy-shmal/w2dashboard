@@ -29,15 +29,20 @@
                     </div>
                     <div class="col col-sm-3 ">
                         <div class="w2cart">
-                            <h5>Grand Total without shipping</h5>
+                            <h5 style="font-size: 1.2rem;">Grand Total without shipping & canceled</h5>
                             <p>{{this.grandTotalNoShipping()}} €</p>
                         </div>
                     </div>
+                    <div class="col col-sm-2 ">
+                        <div class="w2cart">
+                            <h5>Canceled Orders</h5>
+                            <p>{{this.getCanceledOrders()}} </p>
+                        </div>
+                    </div>
 
-                    <div class="col col-sm-7  ">
+                    <div class="col col-sm-5  ">
                         <div class="w2cart small-p">
                             <h5>Payment Methods</h5>
-
 
                             <p class="payment-method" v-for="(value, key) in shippingData" >
                                 <span >{{ key }} : </span>
@@ -54,7 +59,7 @@
 
 
                     <div class="col col-sm-4" v-for="order in orders" v-bind:key="order.id">
-                        <div class="card bg-light mb-3 " style="max-width: 18rem;" >
+                        <div class="card bg-light mb-3 " v-bind:class="{ canceled: order.status =='canceled' }" style="max-width: 18rem;" >
                             <div class="card-header">{{order.increment_id }}</div>
                             <div class="card-body">
                                 <h5 class="card-title">Στοιχεία Παραγγελείας</h5>
@@ -141,8 +146,11 @@
                 this.orders.map(obj => {
                     // total += Math.floor(obj.grand_total * 100) / 100;
                     // shippingtotal += Math.floor(obj.shipping_amount * 100) / 100;
-                    total += Number(obj.grand_total);
-                    shippingtotal += Number(obj.shipping_amount);
+
+                    if (obj.status !== 'canceled'){
+                        total += Number(obj.grand_total);
+                        shippingtotal += Number(obj.shipping_amount);
+                    }
 
                 });
 
@@ -157,12 +165,12 @@
             },
             calculateShippingData(){
 
+                //clear the object before
                 for (const prop of Object.keys(this.shippingData)) {
                     delete  this.shippingData[prop];
                 }
 
-
-
+                //initialize data
                 this.orders.map(obj => {
 
                     this.shippingData[obj.method] = {
@@ -171,8 +179,8 @@
                     };
                 });
 
-                console.log(this.shippingData);
 
+                //fill the prices and count of payment methods
                 this.orders.map(order => {
 
                     this.shippingData[order.method].count += 1 ;
@@ -180,9 +188,27 @@
 
                 });
 
-                console.log(this.shippingData);
                 //return this.shippingData;
-            }
+            },
+
+            getCanceledOrders(){
+
+                let canceledOrders = 0;
+
+
+                //get the canceled totals
+                this.orders.map(obj => {
+
+                    if (obj.status == 'canceled'){
+                        canceledOrders ++;
+                    }
+
+                });
+
+                return  canceledOrders ;
+
+            },
+
 
         },
         computed: {
@@ -226,9 +252,14 @@
 
     .payment-method span {
         display: inline-block;
-        width: 80px;
+        width: 70px;
     }
 
     .payment-method span:first-child {width:155px;}
+
+    .canceled {
+        background-color: #ffc6c6 !important;
+    }
+
 </style>
 
