@@ -37,8 +37,10 @@
                     <div class="col col-sm-7  ">
                         <div class="w2cart small-p">
                             <h5>Payment Methods</h5>
-                            <p v-for="order in orders" v-bind:key="order.id">
-                                <span>{{order.method}}</span> | <span>{{ Math.floor(order.shipping_amount * 100) / 100 }}  €</span> | <span>{{order.increment_id}}</span>
+
+
+                            <p v-for="(value, key) in shippingData" >
+                                <span >{{ key }}: {{ value.count }} : {{ value.totalprice }}</span>
                             </p>
                         </div>
                     </div>
@@ -84,7 +86,8 @@
             return {
                 loading: false,
                 orders: [],
-                date:""
+                date:"",
+                shippingData: {}
             }
         },
         created(){
@@ -103,6 +106,7 @@
                     .then(res => res.json())
                     .then(res => {
                         this.orders = res.data;
+                        this.calculateShippingData();
                         //console.log();
                     })
             },
@@ -148,6 +152,34 @@
                    return this.$moment(this.date).format('YYYY-MM-DD');
                 }
 
+            },
+            calculateShippingData(){
+
+                for (const prop of Object.keys(this.shippingData)) {
+                    delete  this.shippingData[prop];
+                }
+
+
+
+                this.orders.map(obj => {
+
+                    this.shippingData[obj.method] = {
+                        count : 0,
+                        totalprice: 0
+                    };
+                });
+
+                console.log(this.shippingData);
+
+                this.orders.map(order => {
+
+                    this.shippingData[order.method].count += 1 ;
+                    this.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100  ;
+
+                });
+
+                console.log(this.shippingData);
+                //return this.shippingData;
             }
 
         },
