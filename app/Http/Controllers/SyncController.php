@@ -29,7 +29,10 @@ class SyncController extends Controller
         $entityIds = array();
 
         if(empty($date)){
+
             $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
+
+
         }else{
             $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', $date)->get();
         }

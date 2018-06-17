@@ -64774,6 +64774,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -64783,7 +64785,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             loading: false,
             orders: [],
-            date: ""
+            date: "",
+            shippingData: {}
         };
     },
     created: function created() {
@@ -64805,6 +64808,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return res.json();
             }).then(function (res) {
                 _this.orders = res.data;
+                _this.calculateShippingData();
                 //console.log();
             });
         },
@@ -64847,6 +64851,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.date) {
                 return this.$moment(this.date).format('YYYY-MM-DD');
             }
+        },
+        calculateShippingData: function calculateShippingData() {
+            var _this3 = this;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+
+                for (var _iterator = Object.keys(this.shippingData)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var prop = _step.value;
+
+                    delete this.shippingData[prop];
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.orders.map(function (obj) {
+
+                _this3.shippingData[obj.method] = {
+                    count: 0,
+                    totalprice: 0
+                };
+            });
+
+            console.log(this.shippingData);
+
+            this.orders.map(function (order) {
+
+                _this3.shippingData[order.method].count += 1;
+                _this3.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100;
+            });
+
+            console.log(this.shippingData);
+            //return this.shippingData;
         }
     },
     computed: {
@@ -64975,18 +65027,17 @@ var render = function() {
               [
                 _c("h5", [_vm._v("Payment Methods")]),
                 _vm._v(" "),
-                _vm._l(_vm.orders, function(order) {
-                  return _c("p", { key: order.id }, [
-                    _c("span", [_vm._v(_vm._s(order.method))]),
-                    _vm._v(" | "),
+                _vm._l(_vm.shippingData, function(value, key) {
+                  return _c("p", [
                     _c("span", [
                       _vm._v(
-                        _vm._s(Math.floor(order.shipping_amount * 100) / 100) +
-                          "  €"
+                        _vm._s(key) +
+                          ": " +
+                          _vm._s(value.count) +
+                          " : " +
+                          _vm._s(value.totalprice)
                       )
-                    ]),
-                    _vm._v(" | "),
-                    _c("span", [_vm._v(_vm._s(order.increment_id))])
+                    ])
                   ])
                 })
               ],
