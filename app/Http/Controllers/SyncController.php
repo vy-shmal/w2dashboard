@@ -27,7 +27,7 @@ class SyncController extends Controller
     {
         $entityIds = array();
         //$orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
-        $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', '2018-01-29')->get();
+        $orders = DB::connection('superoffers')->table('sales_flat_order')->whereDate('created_at', DB::raw('CURDATE()'))->get();
 
         foreach ($orders as $order) {
             Order::updateOrCreate(
