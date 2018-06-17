@@ -39,8 +39,10 @@
                             <h5>Payment Methods</h5>
 
 
-                            <p v-for="(value, key) in shippingData" >
-                                <span >{{ key }}: {{ value.count }} : {{ value.totalprice }}</span>
+                            <p class="payment-method" v-for="(value, key) in shippingData" >
+                                <span >{{ key }} : </span>
+                                <span >{{ value.count }} : </span>
+                                <span >{{ Math.floor(value.totalprice * 100) / 100 }} €</span>
                             </p>
                         </div>
                     </div>
@@ -221,5 +223,12 @@
         text-align: right;
         padding-right: 10px;
     }
+
+    .payment-method span {
+        display: inline-block;
+        width: 80px;
+    }
+
+    .payment-method span:first-child {width:155px;}
 </style>
 

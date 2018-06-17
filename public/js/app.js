@@ -64341,7 +64341,7 @@ exports = module.exports = __webpack_require__(173)(false);
 
 
 // module
-exports.push([module.i, "\n.w2cart[data-v-78b73b2d] {\n    background-color: #eaeaea;\n    margin-bottom: 30px;\n    padding: 10px;\n}\n.w2cart.small-p p[data-v-78b73b2d] {\n    font-size: 1rem;\n}\n.w2cart p[data-v-78b73b2d] {\n    margin-bottom: 0;\n    border-top: 1px solid #ccc;\n    font-size: 2rem;\n    text-align: right;\n    padding-right: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.w2cart[data-v-78b73b2d] {\n    background-color: #eaeaea;\n    margin-bottom: 30px;\n    padding: 10px;\n}\n.w2cart.small-p p[data-v-78b73b2d] {\n    font-size: 1rem;\n}\n.w2cart p[data-v-78b73b2d] {\n    margin-bottom: 0;\n    border-top: 1px solid #ccc;\n    font-size: 2rem;\n    text-align: right;\n    padding-right: 10px;\n}\n.payment-method span[data-v-78b73b2d] {\n    display: inline-block;\n    width: 80px;\n}\n.payment-method span[data-v-78b73b2d]:first-child {width:155px;\n}\n", ""]);
 
 // exports
 
@@ -64776,6 +64776,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -65028,14 +65030,14 @@ var render = function() {
                 _c("h5", [_vm._v("Payment Methods")]),
                 _vm._v(" "),
                 _vm._l(_vm.shippingData, function(value, key) {
-                  return _c("p", [
+                  return _c("p", { staticClass: "payment-method" }, [
+                    _c("span", [_vm._v(_vm._s(key) + " : ")]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v(_vm._s(value.count) + " : ")]),
+                    _vm._v(" "),
                     _c("span", [
                       _vm._v(
-                        _vm._s(key) +
-                          ": " +
-                          _vm._s(value.count) +
-                          " : " +
-                          _vm._s(value.totalprice)
+                        _vm._s(Math.floor(value.totalprice * 100) / 100) + " €"
                       )
                     ])
                   ])
