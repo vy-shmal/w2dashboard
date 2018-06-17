@@ -183,8 +183,12 @@
                 //fill the prices and count of payment methods
                 this.orders.map(order => {
 
-                    this.shippingData[order.method].count += 1 ;
-                    this.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100  ;
+                    if (order.status !== 'canceled') {
+
+                        this.shippingData[order.method].count += 1;
+                        this.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100;
+
+                    }
 
                 });
 

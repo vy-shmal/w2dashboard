@@ -64904,8 +64904,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //fill the prices and count of payment methods
             this.orders.map(function (order) {
 
-                _this3.shippingData[order.method].count += 1;
-                _this3.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100;
+                if (order.status !== 'canceled') {
+
+                    _this3.shippingData[order.method].count += 1;
+                    _this3.shippingData[order.method].totalprice += Math.floor(Number(order.grand_total) * 100) / 100;
+                }
             });
 
             //return this.shippingData;
