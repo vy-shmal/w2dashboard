@@ -38,7 +38,8 @@ class HomeController extends Controller
         $paymentMethods = array();
 
         //return view('home')->with('orders',$orders);
-        $orders = Order::whereDate('order_created_at', '2018-01-29')->get();
+        //$orders = Order::whereDate('order_created_at', '2018-01-29')->get();
+        $orders = Order::whereDate('order_created_at', DB::raw('CURDATE()'))->get();
         $totalOrders = $orders->count();
 
         //dd($orders);

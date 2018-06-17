@@ -24,7 +24,7 @@
                     <div class="card" style="width: 10rem; display: inline-block;">
                         <div class="card-body">
                             <h5 class="card-title">Τζίρος χωρίς  Μεταφορικά</h5>
-                            <h3 class="card-text"> {{ $tzirosNoShipping }}</h3>
+                            <h3 class="card-text"> {{ $tzirosNoShipping }} €</h3>
                         </div>
                     </div>as
 
@@ -32,7 +32,7 @@
                         <ul>
                             @foreach ($paymentMethods as $key => $value )
                                     <li>
-                                        {{$key}} : {{$value['ammount']}} : {{$value['count']}}
+                                        {{$key}} : {{number_format($value['ammount'],'2')}} € : {{$value['count']}}
                                     </li>
                             @endforeach
                         </ul>
